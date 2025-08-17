@@ -1,0 +1,60 @@
+name: Fix repo structure (move files into folders)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Make directories
+        run: |
+          mkdir -p assets data scripts public .github/workflows
+
+      - name: Move files if they exist
+        shell: bash
+        run: |
+          set -euxo pipefail
+          # assets
+          if [ -f style.css ]; then git mv -f style.css assets/style.css || mv style.css assets/style.css; fi
+          if [ -f app.js ];   then git mv -f app.js   assets/app.js   || mv app.js assets/app.js; fi
+
+          # data
+          if [ -f seed.json ]; then git mv -f seed.json data/seed.json || mv seed.json data/seed.json; fi
+          # 将来 latest.json を生成する場所：data/notices/latest.json（autocrawlが作成）
+
+          # scripts
+          if [ -f autocrawl.py ]; then git mv -f autocrawl.py scripts/autocrawl.py || mv autocrawl.py scripts/autocrawl.py; fi
+          if [ -f sources.csv ];  then git mv -f sources.csv  scripts/sources.csv  || mv sources.csv  scripts/sources.csv;  fi
+
+          # public
+          if [ -f ads.txt ]; then git mv -f ads.txt public/ads.txt || mv ads.txt public/ads.txt; fi
+
+          # workflows
+          if [ -f crawl.yml ]; then
+            mkdir -p .github/workflows
+            git mv -f crawl.yml .github/workflows/crawl.yml || mv crawl.yml .github/workflows/crawl.yml
+          fi
+
+          # 余計なtypoファイルを消す例（あれば）
+          if [ -f readmee ]; then git rm -f readmee || rm -f readmee; fi
+
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: fix repo structure (auto move files)"
+            git push
+          fi
