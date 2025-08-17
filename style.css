@@ -1,0 +1,6 @@
+body {font-family: sans-serif; margin:0; padding:0;}
+header {background:#004080; color:white; padding:1em;}
+nav input {padding:0.5em;}
+#filters {padding:1em; background:#f0f0f0;}
+#list {padding:1em;}
+aside#recommend {background:#fafafa; padding:1em; border-left:1px solid #ddd;}

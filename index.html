@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公共事業公告まとめ</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+</head>
+<body>
+  <header>
+    <h1>公共事業公告まとめ</h1>
+    <nav>
+      <input type="text" id="searchBox" placeholder="検索...">
+    </nav>
+  </header>
+  <main>
+    <section id="filters">
+      <label>地域: <select id="regionFilter"></select></label>
+      <label>カテゴリ: <select id="categoryFilter"></select></label>
+    </section>
+    <section id="list"></section>
+    <aside id="recommend">おすすめ公告</aside>
+  </main>
+  <footer>© 2025 公共事業公告まとめ</footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
